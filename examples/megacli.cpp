@@ -4656,6 +4656,8 @@ autocomplete::ACN autocompleteSyntax()
     using namespace autocomplete;
     std::unique_ptr<Either> p(new Either("      "));
 
+    p->Add(exec_clearscreen, sequence(text("clearscreen")));
+
     p->Add(exec_apiurl, sequence(text("apiurl"), opt(sequence(param("url"), opt(param("disablepkp"))))));
     p->Add(exec_login, sequence(text("login"), opt(flag("-fresh")), either(sequence(param("email"), opt(param("password"))),
                                                       sequence(exportedLink(false, true), opt(param("auth_key"))),
@@ -6614,6 +6616,14 @@ void exec_mfac(autocomplete::ACState& s)
 void exec_mfae(autocomplete::ACState& s)
 {
     client->multifactorauthsetup();
+}
+
+
+
+void exec_clearscreen (autocomplete::ACState& s)
+{
+    system("printf \"\033c\"");
+    cout << "cleared screen successful... " << endl;
 }
 
 void exec_login(autocomplete::ACState& s)
